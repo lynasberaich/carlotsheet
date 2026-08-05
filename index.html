@@ -1255,7 +1255,7 @@ function askBlock(c){
 const LINKS = {};
 CARS.forEach(c => LINKS[c.id] = c.sourceUrl || "https://www.cargurus.com/details/" + c.id);
 
-const fmt = n => "$" + n.toLocaleString();
+const fmt = n => n != null ? "$" + n.toLocaleString() : "—";
 const mi = n => n.toLocaleString();
 const esc = s => String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 
@@ -1311,7 +1311,7 @@ function detailHTML(c){
         ${c.dealer.rating?`CarGurus <span class="stars">${c.dealer.rating}</span>/5 · ${c.dealer.reviews} review${c.dealer.reviews===1?"":"s"}<br>`:"No CarGurus rating yet<br>"}
         ${g.r?`Google <span class="stars">${g.r}</span>/5 · ${g.n.toLocaleString()} reviews<br>`:""}
         ${esc(c.dealer.addr)}<br>
-        <a href="tel:${c.dealer.phone.replace(/[^0-9]/g,'')}">${esc(c.dealer.phone)}</a><br>
+        ${c.dealer.phone?`<a href="tel:${c.dealer.phone.replace(/[^0-9]/g,'')}">${esc(c.dealer.phone)}</a>`:"Phone TBD"}<br>
         ${g.wk?`${esc(g.wk)}<br>Sun: ${esc(g.sun)}<br>`:""}
         ${g.map?`<a href="${g.map}" target="_blank" rel="noopener">Directions ↗</a>`:""}
       </div>
@@ -1414,7 +1414,7 @@ function rowHTML(c){
       <span class="trim">${esc(c.tr)}</span>
     </td>
     <td class="num"><span class="price">${fmt(c.price)}</span>${c.was?`<br><span class="was">${fmt(c.was)}</span>`:""}${c.otd?`<br><span class="otd">OTD ${fmt(c.otd)}</span>`:""}</td>
-    <td><span class="deal ${c.deal.toLowerCase()}">${c.deal} · ${fmt(c.below)} under</span></td>
+    <td>${c.deal?`<span class="deal ${c.deal.toLowerCase()}">${c.deal} · ${fmt(c.below)} under</span>`:`<span class="deal nodeal">—</span>`}</td>
     <td class="num">${mi(c.miles)}</td>
     <td class="hide-s">${c.roof ? '<span class="roofmark">Sunroof</span>' : '<span class="roofno">—</span>'}</td>
     <td class="num hide-s">${c.mpg}</td>
@@ -1456,7 +1456,7 @@ function renderTrips(){
             <div class="stop-time">${esc(s.time)} · ${esc(c.city)}, ${esc(c.st)}</div>
             <span class="veh">${c.y} ${esc(c.mk)} ${esc(c.md)}</span>
             <span class="trim">${esc(c.tr)}</span>
-            <div class="stop-dealer">${esc(c.dealer.name)}${g.r?` · ${g.r}★ (${g.n.toLocaleString()})`:""} · <a href="tel:${c.dealer.phone.replace(/[^0-9]/g,'')}">${esc(c.dealer.phone)}</a></div>
+            <div class="stop-dealer">${esc(c.dealer.name)}${g.r?` · ${g.r}★ (${g.n.toLocaleString()})`:""} · ${c.dealer.phone?`<a href="tel:${c.dealer.phone.replace(/[^0-9]/g,'')}">${esc(c.dealer.phone)}</a>`:"phone TBD"}</div>
             <div class="stop-hours">${esc(g.wk||"")}${g.sun?` · Sun: ${esc(g.sun)}`:""}${g.map?` · <a href="${g.map}" target="_blank" rel="noopener">directions ↗</a>`:""}</div>
           </div>
           <div class="stop-right">
