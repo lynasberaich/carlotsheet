@@ -311,6 +311,19 @@ footer{margin-top:60px;padding-top:18px;border-top:2px solid var(--ink);font-fam
   .hide-s{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- shortlist ranking ---------- */
+.rank-section{margin-top:52px;border-top:2px solid var(--ink);padding-top:22px}
+.rank-section h3{font-family:"Archivo Narrow",sans-serif;text-transform:uppercase;font-size:22px;margin:0 0 4px}
+.rank-sub{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-soft);margin:0 0 20px;letter-spacing:.04em}
+.rank-item{display:grid;grid-template-columns:44px 1fr;gap:0 16px;align-items:start;padding:16px 0;border-bottom:1px solid var(--rule-soft)}
+.rank-n{font-family:"Archivo Narrow",sans-serif;font-weight:700;font-size:34px;line-height:1;color:var(--ink-soft)}
+.rank-n.top{color:var(--ink)}
+.rank-meta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-soft);margin-top:3px;letter-spacing:.02em}
+.rank-note{font-size:13px;color:var(--ink-soft);margin-top:7px;max-width:76ch;line-height:1.5}
+.rank-flag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border:1px solid var(--stamp);color:var(--stamp);display:inline-block;margin-top:6px}
+.rank-badge{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em;padding:2px 6px;border:1px solid var(--rule-soft);color:var(--ink-soft);display:inline-block;margin-top:6px}
+.rank-updated{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-soft);margin-top:20px;letter-spacing:.03em}
 </style>
 </head>
 <body>
@@ -1228,6 +1241,40 @@ const ASK_SPECIFIC = {
  "dulles-outback17":["Full CARFAX reviewed — clean title, 0 accidents, 1 owner. Serviced at Dulles Kia Subaru Leesburg for nine straight years with 20+ documented visits. A very clean history. Three things to probe: (1) Battery was replaced at only 16,327 miles (Nov 2019) and the charging/battery system was checked three more separate times through 2025 — ask if any alternator or charging issue was ever identified, or if it was just the original battery failing early; (2) Front brake pads were replaced and rotors resurfaced at pre-delivery (July 2026) — ask about the rear rotors specifically, which are original; rear pads were replaced at 44k in 2022 but the rotors have never been listed as replaced; (3) The last two service visits before listing (March and June 2026) were at Saville's Service Center in Purcellville rather than Dulles Kia Subaru — ask what prompted the switch. Not a red flag on its own (Saville's is rated 4.9 stars) but worth understanding. Also note: this car is now listed at Dulles Chrysler Dodge Jeep Ram, not a Subaru dealer — confirm any CPO or warranty status directly with them before visiting."]
 };
 
+function rankingHTML(){
+  const items = [
+    {n:1, car:"2017 Mazda CX-5 Grand Touring", dealer:"AutoNation Leesburg", otd:"$21,915 OTD confirmed", miles:"54,804 mi · 6,091/yr", flag:null, badge:"Full CARFAX · 1 owner · 30+ dealer visits",
+     note:"Best-documented history in the entire set. One owner bought new at Priority Mazda Tysons; every service at a Priority dealership, zero accidents, lowest mileage on the shortlist. Top Grand Touring trim: Bose, HUD, heated front and rear seats, memory seat, nav, moonroof, leather. Clear #1."},
+    {n:2, car:"2017 Subaru Outback 2.5i Limited", dealer:"Dulles KIA Leesburg", otd:"OTD unconfirmed · ~$16,855 + fees", miles:"73,410 mi · 7,732/yr", flag:null, badge:"Full CARFAX · 1 owner · 20+ dealer visits",
+     note:"One owner, 20+ documented visits at Dulles Kia Subaru Leesburg for nine years, 7,732 mi/yr usage. Most fully-equipped car in the whole set — EyeSight suite, harman/kardon 576W, HID headlights, heated front and rear leather seats, both power seats with memory, nav, power liftgate, moonroof. Best value on the shortlist given the equipment. Confirm OTD before visiting."},
+    {n:3, car:"2022 Subaru Impreza Premium 5-Door", dealer:"AutoNation Leesburg", otd:"$20,104 OTD confirmed", miles:"85,537 mi · 2 owners", flag:"No-start/hard-start flag — Stohlman Subaru Jul 2025, no repair recorded", badge:null,
+     note:"Newest platform on the shortlist. Confirmed OTD, all four brakes fresh at pre-delivery, EyeSight suite. One unresolved flag: Stohlman Subaru investigated a no-start/hard-start condition July 2025 at 74,471 mi with no repair documented. Get AutoNation to pull that dealer record before buying. Moves to #2 if answered satisfactorily."},
+    {n:4, car:"2020 Subaru Forester Premium", dealer:"Safford Subaru Manassas", otd:"OTD unconfirmed · $19,498 + fees", miles:"75,446 mi", flag:null, badge:"No CARFAX disclosed",
+     note:"Solid newer platform, full EyeSight, panoramic moonroof, power liftgate. Most expensive list price on the shortlist and the only car with zero history disclosure — no CARFAX, no AutoCheck. Pull the CARFAX independently before visiting."},
+    {n:5, car:"2016 Subaru Forester 2.5i Limited", dealer:"Safford Hyundai Leesburg", otd:"OTD unconfirmed · $15,579 + fees", miles:"83,728 mi", flag:null, badge:"CARFAX link on listing",
+     note:"Best feature-to-price ratio on the shortlist — EyeSight, panoramic moonroof, harman/kardon 440W, heated leather, nav, power liftgate at the lowest price before fees. Trade-offs: oldest car (2016), CARFAX not reviewed, history unknown. Worth reading the CARFAX before visiting."},
+    {n:6, car:"2018 Mazda CX-5 Touring · Manassas", dealer:"Safford Subaru Manassas", otd:"OTD unconfirmed · $17,935 + fees", miles:"97,436 mi", flag:"Dealer claims 1 owner — CARFAX shows 3 owners · went through auto auction", badge:null,
+     note:"Strong equipment (Bose, nav, moonroof, Preferred Package) but a troubling history. Three owners, not one as the dealer claims. Owner 2 drove 17,346 mi/yr with only one oil change documented over 47,000 miles. Transmission and transfer case fluids changed at 95k — ask what prompted it. Approach with caution."},
+    {n:7, car:"2018 Mazda CX-5 Touring · Sterling", dealer:"AutoNation Honda Dulles, Sterling", otd:"~$20,323 OTD", miles:"84,025 mi", flag:null, badge:"CARFAX 1-owner badge · Fair Value",
+     note:"Weakest case on the shortlist. No moonroof, no navigation, only one listing photo. 'Fair Value' CARFAX badge. Physically at a different lot in Sterling. OTD of ~$20,323 is higher than the confirmed Impreza OTD ($20,104) for a 2018 with fewer features. Hard to justify over the other options."},
+  ];
+  return `<section class="rank-section">
+    <h3>Shortlist Ranking</h3>
+    <p class="rank-sub">Ranked by verified history quality, mechanical confidence, and value &middot; Updated 8/5/26</p>
+    ${items.map(r=>`
+    <div class="rank-item">
+      <div class="rank-n${r.n<=2?' top':''}">${r.n}</div>
+      <div>
+        <span class="veh">${esc(r.car)}</span>
+        <div class="rank-meta">${esc(r.dealer)} &middot; ${esc(r.otd)} &middot; ${esc(r.miles)}</div>
+        ${r.flag?`<span class="rank-flag">${esc(r.flag)}</span>`:r.badge?`<span class="rank-badge">${esc(r.badge)}</span>`:""}
+        <div class="rank-note">${esc(r.note)}</div>
+      </div>
+    </div>`).join("")}
+    <p class="rank-updated">Updated 8/5/26 &middot; Full CARFAX reviewed for #1, #2, #3, #6 &middot; Badge-only or no history data for #4, #5, #7</p>
+  </section>`;
+}
+
 function askBlock(c){
   const p = PLAT[PLAT_OF[c.id]];
   if (!p) return "";
@@ -1521,7 +1568,7 @@ function render(){
               </div>
             </article>`).join("")}
         </div>
-      </section>`).join("");
+      </section>`).join("") + (state.slOnly ? rankingHTML() : "");
     out.querySelectorAll("[data-jump]").forEach(el => {
       el.addEventListener("click", () => { state.view="table"; syncSeg(); render(); openRow(el.dataset.jump, true); });
       el.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){e.preventDefault();el.click();} });
@@ -1546,7 +1593,7 @@ function render(){
         <tbody>${cars.map(rowHTML).join("")}</tbody>
       </table>
     </section>`;
-  }).join("");
+  }).join("") + (state.slOnly ? rankingHTML() : "");
 
   out.querySelectorAll("tr.row").forEach(r => {
     r.addEventListener("click", () => openRow(r.dataset.id));
