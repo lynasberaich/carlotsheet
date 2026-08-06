@@ -1258,27 +1258,29 @@ const ASK_SPECIFIC = {
 
 function rankingHTML(){
   const items = [
-    {n:1, car:"2017 Mazda CX-5 Grand Touring", dealer:"AutoNation Leesburg", otd:"$21,915 OTD confirmed", miles:"54,804 mi · 6,091/yr", flag:null, badge:"Full CARFAX · 1 owner · 30+ dealer visits",
-     note:"Best-documented history in the entire set. One owner bought new at Priority Mazda Tysons; every service at a Priority dealership, zero accidents, lowest mileage on the shortlist. Top Grand Touring trim: Bose, HUD, heated front and rear seats, memory seat, nav, moonroof, leather. Clear #1."},
-    {n:2, car:"2017 Subaru Outback 2.5i Limited", dealer:"Dulles KIA Leesburg", otd:"OTD unconfirmed · ~$16,855 + fees", miles:"73,410 mi · 7,732/yr", flag:null, badge:"Full CARFAX · 1 owner · 20+ dealer visits",
-     note:"One owner, 20+ documented visits at Dulles Kia Subaru Leesburg for nine years, 7,732 mi/yr usage. Most fully-equipped car in the whole set — EyeSight suite, harman/kardon 576W, HID headlights, heated front and rear leather seats, both power seats with memory, nav, power liftgate, moonroof. Best value on the shortlist given the equipment. Confirm OTD before visiting."},
-    {n:3, car:"2022 Subaru Impreza Premium 5-Door", dealer:"AutoNation Leesburg", otd:"$20,104 OTD confirmed", miles:"85,537 mi · 2 owners", flag:"No-start/hard-start flag — Stohlman Subaru Jul 2025, no repair recorded", badge:null,
-     note:"Newest platform on the shortlist. Confirmed OTD, all four brakes fresh at pre-delivery, EyeSight suite. One unresolved flag: Stohlman Subaru investigated a no-start/hard-start condition July 2025 at 74,471 mi with no repair documented. Get AutoNation to pull that dealer record before buying. Moves to #2 if answered satisfactorily."},
-    {n:4, car:"2020 Subaru Forester Premium", dealer:"Safford Subaru Manassas", otd:"OTD unconfirmed · $19,498 + fees", miles:"75,446 mi", flag:null, badge:"No CARFAX disclosed",
-     note:"Solid newer platform, full EyeSight, panoramic moonroof, power liftgate. Most expensive list price on the shortlist and the only car with zero history disclosure — no CARFAX, no AutoCheck. Pull the CARFAX independently before visiting."},
-    {n:5, car:"2016 Subaru Forester 2.5i Limited", dealer:"Safford Hyundai Leesburg", otd:"OTD unconfirmed · $15,579 + fees", miles:"83,728 mi", flag:null, badge:"CARFAX link on listing",
-     note:"Best feature-to-price ratio on the shortlist — EyeSight, panoramic moonroof, harman/kardon 440W, heated leather, nav, power liftgate at the lowest price before fees. Trade-offs: oldest car (2016), CARFAX not reviewed, history unknown. Worth reading the CARFAX before visiting."},
-    {n:6, car:"2018 Mazda CX-5 Touring · Manassas", dealer:"Safford Subaru Manassas", otd:"OTD unconfirmed · $17,935 + fees", miles:"97,436 mi", flag:"Dealer claims 1 owner — CARFAX shows 3 owners · went through auto auction", badge:null,
-     note:"Strong equipment (Bose, nav, moonroof, Preferred Package) but a troubling history. Three owners, not one as the dealer claims. Owner 2 drove 17,346 mi/yr with only one oil change documented over 47,000 miles. Transmission and transfer case fluids changed at 95k — ask what prompted it. Approach with caution."},
-    {n:7, car:"2018 Mazda CX-5 Touring · Sterling", dealer:"AutoNation Honda Dulles, Sterling", otd:"~$20,323 OTD", miles:"84,025 mi", flag:null, badge:"CARFAX 1-owner badge · Fair Value",
-     note:"Weakest case on the shortlist. No moonroof, no navigation, only one listing photo. 'Fair Value' CARFAX badge. Physically at a different lot in Sterling. OTD of ~$20,323 is higher than the confirmed Impreza OTD ($20,104) for a 2018 with fewer features. Hard to justify over the other options."},
+    {n:1, car:"2014 Mazda CX-5 Grand Touring AWD · Sterling", dealer:"Safford Mazda Sterling", otd:"$17,340 Safford Sale Price (incl. $998 fee) · OTD unconfirmed", miles:"36,457 mi · 2,900/yr", flag:null, badge:"CARFAX 1-Owner · 57 records · 21 service entries",
+     note:"Lowest mileage and lowest annual usage of any car on the shortlist — barely driven. SKYACTIV-G 2.5L paired with a conventional 6-speed automatic: no CVT, no timing chain issues, no known weak points at this mileage. Full CARFAX: 1-owner from new (Dec 2013, Lynchburg Mazda), minor cosmetic rear damage Dec 2022 with no airbag deployment and no structural damage, passed safety inspection Jan 2023. Only caveat is calendar age — 12 years means rubber, seals, and the AC compressor need checking regardless of miles. Grand Touring trim: leather, Bose, heated seats, moonroof, nav, BSM. Listed at $16,342 before the $998 fee; already below what a mileage regression on comparable CX-5 GTs predicts. Negotiate off the rear damage if you want a lever."},
+    {n:2, car:"2017 Mazda CX-5 Grand Touring AWD · Leesburg", dealer:"AutoNation Leesburg", otd:"$21,915 OTD confirmed", miles:"54,804 mi · 6,091/yr", flag:null, badge:"Full CARFAX · 1 owner · 30+ dealer visits",
+     note:"Best-documented history in the entire set. One owner bought new at Priority Mazda Tysons; every service at a Priority dealership, zero accidents. Newer SKYACTIV-G gen (187 hp vs 184) with updated suspension tuning over the 2014. Top Grand Touring trim: Bose, HUD, heated front and rear seats, memory seat, nav, moonroof, leather. OTD of $21,915 is at the ceiling of your budget — confirm it holds before you drive out."},
+    {n:3, car:"2017 Subaru Outback 2.5i Limited · Leesburg", dealer:"Dulles KIA Leesburg", otd:"OTD unconfirmed · ~$16,855 + fees", miles:"73,410 mi · 7,732/yr", flag:null, badge:"Full CARFAX · 1 owner · 20+ dealer visits",
+     note:"One owner, 20+ documented visits at the same dealership over nine years, 7,732 mi/yr usage. Most fully-equipped car in the whole set — EyeSight suite, harman/kardon 576W, HID headlights, heated front and rear leather seats, both power seats with memory, nav, power liftgate, moonroof. CVT concern at 73k: ask for documented CVT fluid change and fluid condition report. Best value on the shortlist given the equipment. Confirm OTD before visiting."},
+    {n:4, car:"2020 Subaru Forester Premium · Manassas", dealer:"Safford Subaru Manassas", otd:"OTD unconfirmed · $19,498 + fees", miles:"75,446 mi · ~12,574/yr", flag:null, badge:"No CARFAX disclosed",
+     note:"Newest platform on the shortlist (2020 Forester is a full redesign). Full EyeSight, panoramic moonroof, power liftgate. Usage rate is higher than the top three but still reasonable. Most expensive list price on the shortlist and the only car with zero history disclosure — no CARFAX, no AutoCheck. Pull the CARFAX independently before visiting; that alone could move this car up or off the list."},
+    {n:5, car:"2016 Subaru Forester 2.5i Limited · Leesburg", dealer:"Safford Hyundai Leesburg", otd:"OTD unconfirmed · $15,579 + fees", miles:"83,728 mi · ~8,373/yr", flag:null, badge:"CARFAX link on listing",
+     note:"Best feature-to-price ratio on the shortlist — EyeSight, panoramic moonroof, harman/kardon 440W, heated leather, nav, power liftgate at the lowest asking price. CVT at 83k miles is the main risk; the 2016 FB25 CVT is less refined than the 2020 unit. CARFAX link is in the listing but not reviewed here — read it before visiting. History unknown."},
+    {n:6, car:"2022 Subaru Impreza Premium 5-Door · Leesburg", dealer:"AutoNation Leesburg", otd:"$20,104 OTD confirmed", miles:"85,537 mi · 21,384/yr", flag:"No-start/hard-start flag — Stohlman Subaru Jul 2025, no repair recorded", badge:null,
+     note:"Newest tech on the shortlist: EyeSight, all four brakes fresh at pre-delivery, confirmed OTD. Two red flags hold it here. First, 21,384 mi/yr is the highest usage rate in the set — this was driven hard for four years. Second, Stohlman Subaru investigated a no-start/hard-start condition July 2025 at 74,471 mi with no repair documented. Get AutoNation to pull that dealer record before buying. Moves up if the no-start issue is answered satisfactorily."},
+    {n:7, car:"2018 Mazda CX-5 Touring AWD · Manassas", dealer:"Safford Subaru Manassas", otd:"OTD unconfirmed · $17,935 + fees", miles:"97,436 mi · ~13,919/yr", flag:"Dealer claims 1 owner — CARFAX shows 3 owners · went through auto auction", badge:null,
+     note:"Strong equipment (Bose, nav, moonroof, Preferred Package) but a troubling history. Three owners, not one as the dealer claims. Owner 2 drove 17,346 mi/yr with only one oil change documented over 47,000 miles. Transmission and transfer case fluids changed at 95k — ask what prompted it. Highest mileage on the shortlist at 97k. Approach with caution; the dealer misrepresenting ownership count is a serious credibility problem."},
+    {n:8, car:"2018 Mazda CX-5 Touring AWD · Sterling", dealer:"AutoNation Honda Dulles, Sterling", otd:"~$20,323 OTD", miles:"84,025 mi · ~12,003/yr", flag:null, badge:"CARFAX 1-owner badge · Fair Value",
+     note:"The weakest case on the shortlist. No moonroof, no navigation, only one listing photo. 'Fair Value' CARFAX badge. OTD of ~$20,323 is higher than the confirmed Impreza OTD ($20,104) for a 2018 Touring with fewer features. No compelling reason to choose this over any of the seven cars above it."},
   ];
   return `<section class="rank-section">
     <h3>Shortlist Ranking</h3>
-    <p class="rank-sub">Ranked by verified history quality, mechanical confidence, and value &middot; Updated 8/5/26</p>
+    <p class="rank-sub">Ranked by mechanical confidence, history quality, and value &middot; Updated 8/6/26</p>
     ${items.map(r=>`
     <div class="rank-item">
-      <div class="rank-n${r.n<=2?' top':''}">${r.n}</div>
+      <div class="rank-n${r.n<=3?' top':''}">${r.n}</div>
       <div>
         <span class="veh">${esc(r.car)}</span>
         <div class="rank-meta">${esc(r.dealer)} &middot; ${esc(r.otd)} &middot; ${esc(r.miles)}</div>
@@ -1286,7 +1288,7 @@ function rankingHTML(){
         <div class="rank-note">${esc(r.note)}</div>
       </div>
     </div>`).join("")}
-    <p class="rank-updated">Updated 8/5/26 &middot; Full CARFAX reviewed for #1, #2, #3, #6 &middot; Badge-only or no history data for #4, #5, #7</p>
+    <p class="rank-updated">Updated 8/6/26 &middot; Full CARFAX reviewed for #1, #2, #3, #7 &middot; Badge-only or no history data for #4, #5, #6, #8</p>
   </section>`;
 }
 
