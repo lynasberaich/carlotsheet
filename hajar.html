@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cars for Hajar</title>
+<style>
+:root{--bg:#f4f5f2;--card:#fff;--ink:#1d2623;--mute:#5d6b66;--line:#dde2de;--acc:#0e5a58;--acc2:#e8f1ef;--good:#1f7a45;--warn:#a85d00;--warnbg:#fff3e0;--bad:#a8321f;--badbg:#fdeae6}
+@media (prefers-color-scheme:dark){:root{--bg:#141a18;--card:#1c2421;--ink:#e8eeeb;--mute:#9aaba4;--line:#2f3b37;--acc:#5fc4bd;--acc2:#1f3330;--good:#6fd39a;--warn:#f0b35c;--warnbg:#33281a;--bad:#f09a8a;--badbg:#3a2220}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Avenir Next","Segoe UI",system-ui,sans-serif}
+a{color:var(--acc)}
+header{padding:28px 16px 8px;max-width:1180px;margin:0 auto}
+h1{font-size:30px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--mute);margin:0 0 14px;max-width:70ch}
+.stats{display:flex;flex-wrap:wrap;gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.stat b{display:block;font-size:18px}
+.stat span{color:var(--mute);font-size:13px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px;margin-top:12px}
+.bar .in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input,select,button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:6px 10px}
+input[type=search]{flex:1;min-width:160px}
+button{cursor:pointer}
+button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+main{max-width:1180px;margin:0 auto;padding:8px 16px 60px}
+.notice{background:var(--warnbg);color:var(--warn);border-radius:8px;padding:8px 12px;margin:12px 0;display:none;font-size:14px}
+.grp{margin-top:26px}
+.grp>h2{font-size:21px;margin:0 0 2px}
+.grp .cnt{color:var(--mute);font-size:14px;margin-bottom:10px}
+.dealer{background:var(--acc2);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:14px;display:grid;gap:2px}
+.dealer b{font-size:15px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.car{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.ibox{position:relative;aspect-ratio:4/3;background:var(--acc2);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:13px;text-align:center;padding:10px}
+.ibox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.body{padding:12px 14px;flex:1}
+.car h3{margin:0;font-size:17px}
+.trim{color:var(--mute);font-size:14px}
+.price{display:flex;align-items:baseline;gap:8px;margin:6px 0;flex-wrap:wrap}
+.price b{font-size:24px}
+.was{color:var(--mute);text-decoration:line-through;font-size:14px}
+.tag{display:inline-block;font-size:12px;border-radius:99px;padding:1px 8px;background:var(--acc2);color:var(--acc);margin:2px 4px 2px 0}
+.tag.good{color:var(--good)}.tag.warn{background:var(--warnbg);color:var(--warn)}.tag.bad{background:var(--badbg);color:var(--bad)}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;font-size:14px;margin-top:6px}
+.kv span{color:var(--mute)}
+.flags{margin:8px 0 0;padding:0;list-style:none;font-size:13.5px}
+.flags li{padding:4px 8px;border-radius:6px;margin-top:4px;background:var(--warnbg);color:var(--warn)}
+.flags li.i{background:var(--acc2);color:var(--ink)}
+.more{border-top:1px solid var(--line);padding:8px 14px}
+.more>button{width:100%}
+.det{display:none;padding:4px 14px 14px;font-size:14px}
+.car.open .det{display:block}
+.det h4{margin:14px 0 4px;font-size:14px;color:var(--acc)}
+.det table{border-collapse:collapse;width:100%}
+.det td{padding:3px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.det td:first-child{color:var(--mute);width:42%;padding-right:8px}
+.chips span{display:inline-block;border:1px solid var(--line);border-radius:5px;padding:0 6px;margin:2px 3px 2px 0;font-size:13px}
+.det ul{margin:4px 0;padding-left:18px}
+.det p{margin:4px 0}
+table.cmp{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);font-size:14px;margin-top:14px}
+table.cmp th,table.cmp td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+table.cmp th{cursor:pointer;background:var(--acc2)}
+.wrap{overflow-x:auto}
+footer{max-width:1180px;margin:0 auto;padding:0 16px 40px;color:var(--mute);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Cars for Hajar</h1>
+  <p class="sub">Eight used compact SUVs from CarGurus, all within 75 miles of ZIP 20724. Listings and prices as read on Oct 10, 2026. They are grouped by where the car is, and each one has the full listing detail and questions to ask the seller.</p>
+  <div class="stats" id="stats"></div>
+</header>
+<div class="bar"><div class="in">
+  <input type="search" id="q" placeholder="Search make, model, color, dealer, VIN" aria-label="Search">
+  <select id="mk" aria-label="Make"><option value="">All makes</option></select>
+  <select id="sort" aria-label="Sort"><option value="loc">Sort: location</option><option value="price">Price, low to high</option><option value="miles">Mileage, low to high</option><option value="below">Biggest discount to market</option><option value="year">Newest year</option><option value="days">Days listed, most first</option></select>
+  <button id="vc" class="on">Cards</button><button id="vt">Table</button>
+  <button id="ex">Expand all</button>
+</div></div>
+<main>
+  <div class="notice" id="note">Some photos could not load here. They come from CarGurus, so they should show when you open this file in a regular browser with internet access.</div>
+  <div id="out"></div>
+</main>
+<footer>Source: CarGurus listing pages and Google Maps dealer data. Prices marked “includes fees” are CarGurus’s label; see each car’s Fees section for what the dealer says is or is not in the price. Tax, title and tags are extra on every car. Verify everything with the dealer before you drive over.</footer>
+<script>
+const PLAT={
+mazda:{n:"Mazda CX-30 (2.5L, 6-speed automatic, AWD)",q:["Can I see the service records, and was the oil changed at the Mazda interval?","Have the rear differential and transfer case (AWD) fluids ever been changed?","Any warning lights, infotainment (Mazda Connect) glitches or software updates done?","Are there any open safety recalls on this VIN? (check safercar.gov too)","Brake pad and rotor condition, and tire brand and tread depth?"]},
+turbo:{n:"Mazda CX-30 2.5 Turbo (250 hp)",q:["Mazda rates 250 hp on premium fuel. Has it been run on premium, and what oil-change interval was used?","Any aftermarket tune, intake or exhaust work?","Any turbo, intercooler or coolant leak repairs on record?","Can I see all service records, and was the AWD fluid serviced?","Any open recalls on this VIN?"]},
+subaru:{n:"Subaru Crosstrek (2.0L, Lineartronic CVT, AWD)",q:["Has the CVT fluid been serviced, and are there any CVT software updates on record?","Was the windshield ever replaced? EyeSight cameras need recalibration after that.","Are all four tires the same brand and wear? Mismatched tires strain Subaru AWD.","Any open recalls, and was the battery replaced or tested?","Can I see service records from a Subaru dealer or independent shop?"]},
+honda:{n:"Honda HR-V LX AWD (2.0L, CVT)",q:["Why has it had three owners in under three years?","Can I see service records, and has the CVT fluid been serviced?","Was any bumper or windshield work done? Honda Sensing may need recalibration.","Any open recalls on this VIN?","Was it a rental, fleet or lease return?"]}
+};
+const CARS=[
+{id:"c1",y:2023,mk:"Mazda",md:"CX-30",tr:"2.5 S AWD",pl:"mazda",price:20800,was:21300,deal:"Great Deal",below:1536,city:"Marlow Heights",st:"MD",miles:28792,ext:"Jet Black",int:"Black",mpg:29,mc:26,mh:33,eng:"191 hp 2.5L I4",hp:191,fuel:"Gasoline",tank:12,trans:"6-Speed Automatic",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"3MVDMBAM9PM507598",stock:"ZR507598",cond:"Used",doors:4,lf:41,lr:36,cargo:20,pics:37,
+safety:["ABS Brakes","Adaptive Cruise Control","Backup Camera","Blind Spot Monitoring","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag","Rear Side Airbags"],
+opts:["Alloy Wheels","Android Auto","Bluetooth","CarPlay","Preferred Package"],
+hist:{title:"Clean title, no issues reported",acc:"0 accidents reported",own:2,chk:"AutoCheck, Sep 4, 2026"},
+mkt:{drop:500,dd:43,cd:127,saves:8,slow:true},
+apr:"7.99%",pmt:387,pm:{1000:369,2000:352,5000:299},t60:"Shorten to 60 months to save $1,344 in total interest ($442/mo)",
+dealer:{k:"d1"},
+fees:{t:"warn",s:"Listed $20,800 is labeled “includes fees”, but the dealer’s own disclaimer says the $800 dealer processing charge is NOT included. Expect about $21,600 before tax, title and tags. Ask for a written out-the-door price."},
+perks:"30 day / 1,000 mile warranty and first oil change free (within six months). Comprehensive inspection before sale. Dealer notes CARFAX: no accidents, 2 owners (personal lease and personal use), 7 service records. Remaining Mazda factory coverage: 5yr/60k powertrain, 3yr/36k basic (about 7,000 miles of basic left, if the in-service date is recent).",
+flags:[["w","Fee label conflict: price says “includes fees” but $800 processing is excluded."],["i","Two prior owners, one a personal lease. 7 service records on file; ask for copies."],["w","Basic warranty (3yr/36k) likely ends soon at 28.8k miles."]],
+desc:"2023 Mazda CX30 2.5 S AWD finished in Jet Black Mica with Black cloth interior. SKYACTIV-G 2.5L 4-cylinder, 6-speed automatic with Sport mode, iACTIV AWD, G-Vectoring Control Plus. Mazda Radar Cruise Control w/ Stop & Go, Lane Keep Assist, Smart Brake Support, 8.8 inch center display, Android Auto, Apple CarPlay, rain-sensing wipers, LED headlights and taillights, 16 inch alloys (215/65R16 all-season), 8-speaker audio with HD Radio, two USB inputs, push button start, electronic parking brake, rearview camera, 60/40 split rear seat, carpeted floor mats. Safety: driver and passenger knee airbags, front and rear side-impact airbags and curtains, tire pressure monitoring, engine immobilizer, high beam control, driver attention alert, lane departure warning. 191 hp, 186 lb-ft torque. 26 city / 33 highway.",
+equip:"8 Speakers,AM/FM radio,MAZDA CONNECT Infotainment System,Radio data system,Radio: AM/FM/HD Audio System,Air Conditioning,Rear window defroster,Power steering,Power windows,Remote keyless entry,Steering wheel mounted audio controls,Speed-sensing steering,Traction control,4-Wheel Disc Brakes,ABS brakes,Dual front impact airbags,Dual front side impact airbags,Emergency communication system: Mazda Connected Services (3-year complimentary trial included),Front anti-roll bar,Front wheel independent suspension,Knee airbag,Low tire pressure warning,Occupant sensing airbag,Overhead airbag,Rear side impact airbag,Brake assist,Electronic Stability Control,Exterior Parking Camera Rear,Auto High-beam Headlights,Delay-off headlights,Fully automatic headlights,Panic alarm,Speed control,Bumpers: body-color,Power door mirrors,Spoiler,AppLink/Apple CarPlay and Android Auto,Cloth Seat Trim,Compass,Driver door bin,Driver vanity mirror,Front reading lights,Illuminated entry,Outside temperature display,Passenger vanity mirror,Tachometer,Telescoping steering wheel,Tilt steering wheel,Trip computer,Front Bucket Seats,Front Center Armrest,Split folding rear seat,Passenger door bin,16 x 6.5J Aluminum Alloy Wheels,Alloy wheels,Rain sensing wipers,Rear window wiper,Variably intermittent wipers,4.095 Axle Ratio,FORWARD COLLISION WARNING,BLIND SPOT MONITORING,LANE DEPARTURE WARNING,LANE KEEP ASSIST,PRE COLLISION SYSTEM W/ PEDESTRIAN ALERT,REAR CROSS TRAFFIC ALERT,AUTO HIGH BEAMS,DUAL ZONE A/C CONTROLS,BACK UP SENSORS,PUSH-BUTTON START,POWER SEATS,CRUISE CONTROL,BLUETOOTH HANDS-FREE PHONE SYSTEM,POWER WINDOWS & LOCKS",
+img:"2026/09/02/16/00/2023_mazda_cx-30-pic-4231079654683870001-1024x768.jpeg"},
+
+{id:"c2",y:2024,mk:"Subaru",md:"Crosstrek",tr:"Premium AWD",pl:"subaru",price:23297,was:23797,deal:"Great Deal",below:1612,city:"Glen Burnie",st:"MD",miles:39871,ext:"Crystal White Pearl",int:"Gray",mpg:30,mc:27,mh:34,eng:"152 hp 2L H4",hp:152,fuel:"Gasoline",tank:16,trans:"Continuously Variable Transmission",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"JF2GUADC5RH281547",stock:"K70100A",cond:"Used",doors:4,lf:42,lr:36,cargo:19,pics:31,
+safety:["ABS Brakes","Backup Camera","Blind Spot Monitoring","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag"],
+opts:["Alloy Wheels","Android Auto","Bluetooth","CarPlay","Cold Weather Package","Heated Seats","Sunroof/Moonroof"],
+hist:{title:"Clean title, no issues reported",acc:"1 accident reported (no damage reported)",own:1,chk:"AutoCheck, Jul 31, 2026"},
+mkt:{drop:500,dd:71,cd:71,saves:1,slow:true},
+apr:"7.99%",pmt:433,pm:{1000:416,2000:398,5000:346},t60:"Shorten to 60 months to save $1,476 in total interest ($495/mo)",
+dealer:{k:"d2"},
+fees:{t:"i",s:"Labeled “includes fees”. The listing gives no fee breakdown. Ask what is added on top of $23,297 besides tax, title and tags."},
+perks:"One owner with service records available (per dealer).",
+flags:[["w","An accident is on the history even though “no damage reported”. Ask for the Carfax and any repair invoice."],["i","Highest mileage of the Crosstrek group (39,871)."],["w","Reviews differ: 3.0 on CarGurus (3 reviews) vs 4.7 on Google (807)."]],
+desc:"2024 Subaru Crosstrek Premium in clean white, one owner with available service records. All Wheel Drive, Blind Spot Detection with Rear Cross-Traffic Alert, Power Moonroof, 10-way power driver seat with lumbar, heated front seats, heated mirrors and wipers, Apple CarPlay and Android Auto on the 11.6-inch STARLINK system, all-weather floor liners and splash guards, auto-dimming mirrors, backup camera, SiriusXM, Bluetooth, 17-inch dark gray alloys. 2.0L 4-cylinder with Lineartronic CVT, 27 city / 34 highway. Dual-zone automatic climate, rear window defrost, automatic emergency steering, rear seatback protector.",
+equip:"All-Weather Package,BSD/RCTA & Moonrf & All Weather Pkg & Pwr Dr. Seat,Popular Package #4,6 Speakers,AM/FM radio: SiriusXM,Radio data system,Radio: Subaru STARLINK 11.6 Multimedia Plus Sys,Air Conditioning,Automatic temperature control,Front dual zone A/C,Rear window defroster,Power steering,Power windows,Remote keyless entry,Steering wheel mounted audio controls,Four wheel independent suspension,Speed-sensing steering,Traction control,4-Wheel Disc Brakes,ABS brakes,Anti-whiplash front head restraints,Dual front impact airbags,Dual front side impact airbags,Emergency communication system: STARLINK Safety and Security (Subscription Required),Front anti-roll bar,Knee airbag,Low tire pressure warning,Occupant sensing airbag,Overhead airbag,Rear anti-roll bar,Power Moonroof,Rear Bumper Cover,Brake assist,Electronic Stability Control,Exterior Parking Camera Rear,Auto High-beam Headlights,Front fog lights,Fully automatic headlights,Panic alarm,Security system,Speed control,Auto-Dimming Exterior Mirror w/Approach Light,Bumpers: body-color,Heated Exterior Mirrors,Power door mirrors,Splash Guards,Spoiler,Turn signal indicator mirrors,All-Weather Floor Liners,Auto-Dimming Mirror w/Compass & HomeLink,Blind Spot Detection w/Rear Cross-Traffic Alert,Driver door bin,Driver vanity mirror,Front reading lights,Illuminated entry,Outside temperature display,Overhead console,Passenger vanity mirror,Rear seat center armrest,Rear Seatback Protector,STARLINK/Apple CarPlay/Android Auto,Tachometer,Telescoping steering wheel,Tilt steering wheel,Trip computer,10-Way Power Driver's Seat,Front Bucket Seats,Front Center Armrest,Heated Front Seats,Premium Cloth Upholstery,Split folding rear seat,Passenger door bin,Alloy wheels,Wheels: 17 x 7.0J Dark Gray Aluminum Alloy,Heated Wipers,Rear window wiper,Variably intermittent wipers,3.90 Axle Ratio,SUNROOF,ONE OWNER,BLUETOOTH,BACK UP CAMERA,HEATED SEATS,SATELLITE RADIO,ALL WHEEL DRIVE,APPLE CAR PLAY,SERVICE RECORDS AVAILABLE",
+img:"2026/08/28/07/13/2024_subaru_crosstrek-pic-9218479411281355459-1024x768.jpeg"},
+
+{id:"c3",y:2024,mk:"Subaru",md:"Crosstrek",tr:"Premium AWD",pl:"subaru",price:23754,was:25094,deal:"Great Deal",below:1370,city:"Glen Burnie",st:"MD",miles:32670,ext:"Magnetite Gray Metallic",int:"Gray",mpg:30,mc:27,mh:34,eng:"152 hp 2L H4",hp:152,fuel:"Gasoline",tank:16,trans:"Continuously Variable Transmission",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"JF2GUADC4R8281815",stock:"G261545A",cond:"CarBravo Certified Pre-Owned",doors:4,lf:42,lr:36,cargo:19,pics:30,
+safety:["ABS Brakes","Adaptive Cruise Control","Backup Camera","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag"],
+opts:["Alloy Wheels","Android Auto","Bluetooth","CarPlay","Multi Zone Climate Control","Navigation System"],
+hist:{title:"Clean title, no issues reported",acc:"0 accidents reported",own:1,chk:"AutoCheck, Oct 5, 2026"},
+mkt:{drop:1340,dd:101,cd:101,saves:0,slow:true},
+apr:"8.04%",pmt:442,pm:{1000:425,2000:407,5000:355},t60:"Shorten to 60 months to save $1,464 in total interest ($506/mo)",
+dealer:{k:"d3"},
+fees:{t:"i",s:"Labeled “includes fees”. Dealer says its market-based pricing already includes Maryland state inspection and all reconditioning. Ask about any other add-ons."},
+perks:"CarBravo Certified. Clean Carfax, one-owner local trade. Pricing includes MD state inspection and complete reconditioning.",
+flags:[["i","Cleanest history of the Glen Burnie cars: one owner, no accident."],["w","Listing shows a Navigation System option, but the equipment list has none. Ask to see it on the car."],["w","Listed 101 days with a $1,340 drop, so there may be room to negotiate."]],
+desc:"2024 Subaru Crosstrek Premium, single-owner, locally traded, 32,670 miles. 27 city / 34 highway. Subaru STARLINK 11.6-inch Multimedia Plus with Apple CarPlay and Android Auto, AWD with Lineartronic CVT, front dual-zone automatic temperature control, auto-dimming mirrors with compass and HomeLink, all-weather floor liners and splash guards, 17-inch dark gray alloys, rear bumper cover, exterior parking camera, rear seatback protector, STARLINK Safety and Security, four-wheel independent suspension with stability control. CarBravo Certified with a clean Carfax. Market-based pricing includes MD state inspection and complete reconditioning.",
+equip:"Popular Package #4,Standard Model,6 Speakers,AM/FM radio: SiriusXM,Radio data system,Radio: Subaru STARLINK 11.6 Multimedia Plus Sys,Air Conditioning,Automatic temperature control,Front dual zone A/C,Rear window defroster,Power steering,Power windows,Remote keyless entry,Steering wheel mounted audio controls,Four wheel independent suspension,Speed-sensing steering,Traction control,4-Wheel Disc Brakes,ABS brakes,Anti-whiplash front head restraints,Dual front impact airbags,Dual front side impact airbags,Emergency communication system: STARLINK Safety and Security (Subscription Required),Front anti-roll bar,Knee airbag,Low tire pressure warning,Occupant sensing airbag,Overhead airbag,Rear anti-roll bar,Rear Bumper Cover,Brake assist,Electronic Stability Control,Exterior Parking Camera Rear,Auto High-beam Headlights,Front fog lights,Fully automatic headlights,Panic alarm,Security system,Speed control,Auto-Dimming Exterior Mirror w/Approach Light,Bumpers: body-color,Power door mirrors,Splash Guards,Spoiler,Turn signal indicator mirrors,All-Weather Floor Liners,Auto-Dimming Mirror w/Compass & HomeLink,Driver door bin,Driver vanity mirror,Front reading lights,Illuminated entry,Outside temperature display,Overhead console,Passenger vanity mirror,Rear seat center armrest,Rear Seatback Protector,STARLINK/Apple CarPlay/Android Auto,Tachometer,Telescoping steering wheel,Tilt steering wheel,Trip computer,Front Bucket Seats,Front Center Armrest,Premium Cloth Upholstery,Split folding rear seat,Passenger door bin,Alloy wheels,Wheels: 17 x 7.0J Dark Gray Aluminum Alloy,Rear window wiper,Variably intermittent wipers,3.90 Axle Ratio,ONE OWNER CARFAX,MARKET BASED PRICING INCLUDES MD STATE INSPECTION AND ALL RECONDITIONING,CLEAN CARFAX,LOCAL TRADE,LOCAL ONE OWNER TRADE,CarBravo Certified",
+img:"2026/08/04/20/58/2024_subaru_crosstrek-pic-8099420491136665152-1024x768.jpeg"},
+
+{id:"c4",y:2022,mk:"Mazda",md:"CX-30",tr:"2.5 S Select AWD",pl:"mazda",price:20671,was:21014,deal:"Great Deal",below:2063,city:"Manassas",st:"VA",miles:38374,ext:"Jet Black",int:"Black",mpg:27,mc:24,mh:31,eng:"186 hp 2.5L I4",hp:186,fuel:"Gasoline",tank:12,trans:"6-Speed Automatic",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"3MVDMBBL2NM451989",stock:"L467693A",cond:"Used",doors:4,lf:41,lr:36,cargo:20,pics:42,
+safety:["NHTSA ratings shown on listing (overall, frontal, side, rollover)","ABS Brakes","Adaptive Cruise Control","Backup Camera","Blind Spot Monitoring","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag"],
+opts:["Alloy Wheels","Android Auto","Bluetooth","CarPlay"],
+hist:{title:"Clean title, no issues reported",acc:"1 accident reported (no damage reported)",own:1,chk:"AutoCheck, Aug 5, 2026"},
+mkt:{drop:343,dd:66,cd:66,saves:5,slow:true},
+apr:"7.99%",pmt:385,pm:{1000:367,2000:350,5000:297},t60:"Shorten to 60 months to save $1,380 in total interest ($439/mo)",
+dealer:{k:"d4"},
+fees:{t:"i",s:"Price includes the $999 dealer fee and $25 electronic fee. It excludes sales tax, title and government fees. Price is valid only on the day of publication, per the dealer."},
+perks:"Fully inspected and serviced. Listing says “Under original factory warranty!” but see the flag below. 360-degree photo view available.",
+flags:[["w","“Under original factory warranty” is doubtful at 38,374 miles: the 3yr/36k basic warranty is likely over. Only 5yr/60k powertrain would remain. Ask for exact coverage in writing."],["w","An accident is on the history with “no damage reported”. Ask for the Carfax."],["i","Best discount to market of the group ($2,063 below)."]],
+desc:"Recent price drop. 2022 Mazda CX-30 2.5 S Select Package, black, just over 38,000 miles, fully inspected and serviced. Remote keyless entry, Apple CarPlay and Android Auto, rear parking camera, fully automatic headlights with delay-off, steering wheel audio controls, 18-inch alloys, automatic dual-zone climate, power mirrors with turn signals, leather-wrapped wheel and shift knob, split-folding rear seat with center armrest. SKYACTIV-G 2.5L with 6-speed automatic, 24 city / 31 highway. Leatherette seating, MAZDA CONNECT, dual front and side airbags, ESC, Mazda Connected Services with automatic 911 dialing.",
+equip:"8 Speakers,AM/FM radio,MAZDA CONNECT Infotainment System,Radio data system,Radio: AM/FM/HD Audio System,Air Conditioning,Automatic temperature control,Front dual zone A/C,Rear window defroster,Power steering,Power windows,Remote keyless entry,Steering wheel mounted audio controls,Speed-sensing steering,Traction control,4-Wheel Disc Brakes,ABS brakes,Dual front impact airbags,Dual front side impact airbags,Emergency communication system: Mazda Connected Services (Automatic 911 Dialing),Front anti-roll bar,Front wheel independent suspension,Knee airbag,Low tire pressure warning,Occupant sensing airbag,Overhead airbag,Brake assist,Electronic Stability Control,Exterior Parking Camera Rear,Auto High-beam Headlights,Delay-off headlights,Fully automatic headlights,Panic alarm,Speed control,Bumpers: body-color,Power door mirrors,Roof rack: rails only,Spoiler,Turn signal indicator mirrors,AppLink/Apple CarPlay and Android Auto,Compass,Driver door bin,Driver vanity mirror,Front reading lights,Illuminated entry,Leather Shift Knob,Leather steering wheel,Low Wall All-Weather Floor Mats,Outside temperature display,Passenger vanity mirror,Rear seat center armrest,Tachometer,Telescoping steering wheel,Tilt steering wheel,Trip computer,Front Bucket Seats,Front Center Armrest,Leatherette Seat Trim,Split folding rear seat,Passenger door bin,Alloy wheels,Wheels: 18 x 7J Aluminum Alloy,Rain sensing wipers,Rear window wiper,Variably intermittent wipers,3.850 Axle Ratio,Fully Inspected and Serviced",
+img:"2026/08/22/05/45/2022_mazda_cx-30-pic-6264086765536714329-1024x768.jpeg"},
+
+{id:"c5",y:2024,mk:"Honda",md:"HR-V",tr:"LX AWD",pl:"honda",price:22799,was:23299,deal:"Great Deal",below:2333,city:"Dundalk",st:"MD",miles:29966,ext:"Urban Gray Pearl",int:"Cloth (color not listed)",mpg:27,mc:25,mh:30,eng:"158 hp 2L I4",hp:158,fuel:"Gasoline",tank:14,trans:"Continuously Variable Transmission",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"3CZRZ2H32RM744792",stock:"H199246B",cond:"Used",doors:4,lf:41,lr:37,cargo:24,pics:30,
+safety:["ABS Brakes","Adaptive Cruise Control","Backup Camera","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag","Rear Side Airbags"],
+opts:["Alloy Wheels","Android Auto","CarPlay"],
+hist:{title:"Clean title, no issues reported",acc:"0 accidents reported",own:3,chk:"AutoCheck (date not shown)"},
+mkt:{drop:500,dd:43,cd:43,saves:2,slow:false},
+apr:"7.99%",pmt:424,pm:{1000:407,2000:389,5000:336},t60:"Shorten to 60 months to save $1,428 in total interest ($485/mo)",
+dealer:{k:"d5"},
+fees:{t:"i",s:"Labeled “includes fees”. Dealer states the price does not include state sales tax, title and license plate. No other fee detail given; ask for the out-the-door price."},
+perks:"Dealer says every vehicle is fully inspected and professionally detailed. Rate matching applies to new Hyundai inventory only, not this used Honda.",
+flags:[["w","Three previous owners for a 2024 model. Ask why and where it was used."],["w","Reviews differ: 2.9 on CarGurus (43 reviews) vs 4.4 on Google (1,018)."],["i","Most cargo room of the group (24 cu ft). Base LX trim, 158 hp."]],
+desc:"2024 Honda HR-V LX AWD at Hyundai of Dundalk, Urban Gray Pearl exterior with cloth interior. Dealer says every vehicle is fully inspected and professionally detailed, serves Dundalk and Greater Baltimore, and offers flexible finance options. (The dealer’s feature list in the description is blank on the listing.)",
+equip:"4 Speakers,AM/FM radio,Radio data system,Radio: 180-Watt Audio System w/4 Speakers,Air Conditioning,Automatic temperature control,Rear window defroster,Power steering,Power windows,Remote keyless entry,Steering wheel mounted audio controls,Four wheel independent suspension,Speed-sensing steering,Traction control,4-Wheel Disc Brakes,ABS brakes,Dual front impact airbags,Dual front side impact airbags,Emergency communication system: HondaLink,Front anti-roll bar,Knee airbag,Low tire pressure warning,Occupant sensing airbag,Overhead airbag,Rear anti-roll bar,Rear side impact airbag,Brake assist,Electronic Stability Control,Exterior Parking Camera Rear,Auto High-beam Headlights,Delay-off headlights,Fully automatic headlights,Panic alarm,Security system,Adaptive Cruise Control: Adaptive Cruise Control (ACC) with Low-Speed Follow,Speed control,Bumpers: body-color,Power door mirrors,Spoiler,Apple CarPlay/Android Auto,Cloth Seat Trim,Driver door bin,Driver vanity mirror,Front reading lights,Illuminated entry,Outside temperature display,Passenger vanity mirror,Rear reading lights,Tachometer,Telescoping steering wheel,Tilt steering wheel,Trip computer,Front Bucket Seats,Front Center Armrest,Split folding rear seat,Passenger door bin,Alloy wheels,Wheels: 17 Silver Painted Alloy,Rear window wiper,Variably intermittent wipers,5.436 Axle Ratio",
+img:"2026/10/01/17/59/2024_honda_hr-v-pic-2854381857860404134-1024x768.jpeg"},
+
+{id:"c6",y:2020,mk:"Mazda",md:"CX-30",tr:"Premium AWD",pl:"mazda",price:21297,was:21997,deal:"Great Deal",below:2426,city:"Ellicott City",st:"MD",miles:32557,ext:"Machine Gray Metallic",int:"Black",mpg:27,mc:24,mh:31,eng:"186 hp 2.5L I4",hp:186,fuel:"Gasoline",tank:12,trans:"6-Speed Automatic",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"3MVDMBEM1LM135419",stock:"690471",cond:"Used",doors:4,lf:41,lr:36,cargo:20,pics:35,
+safety:["ABS Brakes","Backup Camera","Blind Spot Monitoring","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag"],
+opts:["Alloy Wheels","Android Auto","CarPlay","Heated Seats","Leather Seats","Premium Package","Sunroof/Moonroof"],
+hist:{title:"Clean title, no issues reported",acc:"0 accidents reported",own:2,chk:"AutoCheck (date not shown)"},
+mkt:{drop:700,dd:51,cd:51,saves:0,slow:true},
+apr:"7.99%",pmt:396,pm:{1000:379,2000:361,5000:309},t60:"Shorten to 60 months to save $1,332 in total interest ($453/mo)",
+dealer:{k:"d6"},
+fees:{t:"i",s:"Labeled “includes fees”. The listing gives no fee breakdown. Ask what is added besides tax, title and tags."},
+perks:"Apple Honda advertises a Lifetime Engine Warranty on select qualifying vehicles and free oil changes, rotations, washes and alignment checks for 6 years / 60,000 miles. Terms, exclusions and maintenance requirements apply; the services are non-transferable. It is a Honda promotion, so ask whether it covers this Mazda.",
+flags:[["w","Oldest car (2020). Mazda’s factory warranty has run out by age. The dealer’s warranty promo may not apply to a Mazda."],["i","Fully loaded Premium: leather, heated seats, head-up display, power liftgate, moonroof, 12 speakers."],["w","Dealer text lists mixed MPG figures (25/32, 24/31, 29/36). Use the EPA 24/31."]],
+desc:"2020 Mazda CX-30 Premium in Machine Gray Metallic, just over 32,000 miles. SKYACTIV-G 2.5L with 6-speed automatic and AWD, dual-zone automatic climate, power sliding-glass moonroof, heated leather front seats, MAZDA CONNECT with Apple CarPlay and Android Auto, blind spot monitoring with rear cross traffic alert, front and rear LED signature lights, 18-inch alloys, rear parking camera, head-up Active Driving Display. Premium Package adds heated seats, leather accents and convenience features. Dealer promo: select qualifying Honda vehicles include a Lifetime Engine Warranty, plus oil changes, rotations, washes and alignment checks for 6 years / 60,000 miles, non-transferable, see dealer for exclusions, MD law applies. Recent Arrival.",
+equip:"Premium Package,12 Speakers,AM/FM radio: SiriusXM,Gloss Painted Speaker Grille,MAZDA CONNECT Infotainment System Voice Command,Radio data system,Radio: AM/FM Audio System,Shark Fin Antenna,Air Conditioning,Automatic temperature control,Dual-Zone Automatic Climate Control System,Front dual zone A/C,Rear window defroster,Heads-Up Display,Memory seat,Power driver seat,Power steering,Power windows,Remote keyless entry,Steering wheel mounted audio controls,Speed-sensing steering,Traction control,4-Wheel Disc Brakes,ABS brakes,Dual front impact airbags,Dual front side impact airbags,Emergency communication system: MAZDA CONNECT,Front anti-roll bar,Front wheel independent suspension,Knee airbag,Low tire pressure warning,Mazda Advanced Keyless Entry,Occupant sensing airbag,Overhead airbag,Power moonroof,Power Sliding-Glass Moonroof,Power Liftgate,Power Rear Liftgate,Brake assist,Electronic Stability Control,Exterior Parking Camera Rear,Adaptive Front Lighting System,Auto High-beam Headlights,Delay-off headlights,Fully automatic headlights,Panic alarm,Speed control,Bumpers: body-color,Front & Rear LED Signature Headlights & Taillights,Front Grille Black Gloss Paint,Machine Gray Metallic Paint,Power door mirrors,Roof rack: rails only,Side Mirror Turn Lamps,Spoiler,Turn signal indicator mirrors,Active Driving Display,AppLink/Apple CarPlay and Android Auto,Blind Spot Monitoring w/Rear Cross Traffic Alert,Compass,Driver door bin,Driver vanity mirror,Exterior Mirrors w/Memory Positioning,Front reading lights,Illuminated entry,Illuminated Vanity Mirrors,Leather Shift Knob,Leather steering wheel,Leather-Wrapped Steering Wheel & Gear Shift Knob,Outside temperature display,Overhead console,Overhead Console w/Sunglass Holder,Passenger vanity mirror,Rear seat center armrest,Tachometer,Telescoping steering wheel,Tilt steering wheel,Trip computer,Front Bucket Seats,Front Center Armrest,Heated Front Bucket Seats,Heated front seats,Leather Seat Trim,Rear Seat Armrest w/Cupholders,Split folding rear seat,Passenger door bin,Roof Rails,18 x 7J Alloy Wheels,Alloy wheels,Rear Privacy Glass,Rain sensing wipers,Rear window wiper,Variably intermittent wipers,4.095 Axle Ratio",
+img:"2026/09/01/19/51/2020_mazda_cx-30-pic-1974726907701332133-1024x768.jpeg"},
+
+{id:"c7",y:2024,mk:"Subaru",md:"Crosstrek",tr:"Premium AWD",pl:"subaru",price:23755,was:23800,deal:"Great Deal",below:1578,city:"Frederick",st:"MD",miles:31885,ext:"Pure Red",int:"Black",mpg:30,mc:27,mh:34,eng:"152 hp 2L H4",hp:152,fuel:"Gasoline",tank:16,trans:"Continuously Variable Transmission",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"JF2GUADC3R8282406",stock:"P1G0276",cond:"Used",doors:4,lf:42,lr:36,cargo:19,pics:31,
+safety:["ABS Brakes","Adaptive Cruise Control","Backup Camera","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag"],
+opts:["Alloy Wheels","Android Auto","Bluetooth","CarPlay"],
+hist:{title:"Clean title, no issues reported",acc:"0 accidents reported",own:1,chk:"AutoCheck (date not shown)"},
+mkt:{drop:45,dd:46,cd:46,saves:1,slow:false},
+apr:"7.99%",pmt:442,pm:{1000:424,2000:407,5000:354},t60:"Shorten to 60 months to save $1,524 in total interest ($505/mo)",
+dealer:{k:"d7"},
+fees:{t:"good",s:"Clearest fee wording of the group: the dealer says the advertised price is the full delivered cash price, with all dealer processing fees included, excluding only taxes and title fees. Still confirm in writing."},
+perks:"Comes with extras: LED upgrade, aero crossbar set, cargo cover, rear gate assist handle and rear gate light. Conditional manufacturer incentives are not included in the price.",
+flags:[["i","One owner, no accidents, clean history, and the dealer states all fees are in the price."],["i","Fewest days listed among the Crosstrek group (46), so less price flexibility; only $45 off so far."],["i","Extras on the car: crossbars, cargo cover, rear gate light."]],
+desc:"2024 Subaru Crosstrek Premium in red, just over 31,000 miles. 2.0L 4-cylinder, 27 city / 34 highway. Key features: LED Upgrade, All-Weather Floor Liners, Rear Bumper Cover, Cargo Cover, Auto-Dimming Mirror w/Compass & HomeLink, Auto-Dimming Exterior Mirror w/Approach Light, Aero Crossbar Set, Rear Gate Assist Handle, Rear Seatback Protector, Rear Gate Light. Subaru STARLINK 11.6-inch Multimedia Plus with Apple CarPlay and Android Auto, dual front airbags, ESC, traction control, rearview camera, automatic temperature control with front dual-zone A/C, power windows and mirrors, split-folding rear seat.",
+equip:"Standard Model,6 Speakers,AM/FM radio: SiriusXM,Radio data system,Radio: Subaru STARLINK 11.6 Multimedia Plus Sys,Air Conditioning,Automatic temperature control,Front dual zone A/C,Rear window defroster,Power steering,Power windows,Remote keyless entry,Steering wheel mounted audio controls,Four wheel independent suspension,Speed-sensing steering,Traction control,4-Wheel Disc Brakes,ABS brakes,Anti-whiplash front head restraints,Dual front impact airbags,Dual front side impact airbags,Emergency communication system: STARLINK Safety and Security (Subscription Required),Front anti-roll bar,Knee airbag,Low tire pressure warning,Occupant sensing airbag,Overhead airbag,Rear anti-roll bar,Rear Bumper Cover,Brake assist,Electronic Stability Control,Exterior Parking Camera Rear,Auto High-beam Headlights,Front fog lights,Fully automatic headlights,Panic alarm,Security system,Speed control,Auto-Dimming Exterior Mirror w/Approach Light,Bumpers: body-color,Power door mirrors,Rear Gate Assist Handle,Spoiler,Turn signal indicator mirrors,All-Weather Floor Liners,Auto-Dimming Mirror w/Compass & HomeLink,Driver door bin,Driver vanity mirror,Front reading lights,Illuminated entry,LED Upgrade,Outside temperature display,Overhead console,Passenger vanity mirror,Rear seat center armrest,Rear Seatback Protector,STARLINK/Apple CarPlay/Android Auto,Tachometer,Telescoping steering wheel,Tilt steering wheel,Trip computer,Front Bucket Seats,Front Center Armrest,Premium Cloth Upholstery,Split folding rear seat,Aero Crossbar Set,Cargo Cover,Passenger door bin,Rear Gate Light,Alloy wheels,Wheels: 17 x 7.0J Dark Gray Aluminum Alloy,Rear window wiper,Variably intermittent wipers,3.90 Axle Ratio",
+img:"2026/09/02/07/22/2024_subaru_crosstrek-pic-8950364967263017480-1024x768.jpeg"},
+
+{id:"c8",y:2022,mk:"Mazda",md:"CX-30",tr:"2.5 Turbo AWD",pl:"turbo",price:22445,was:null,deal:"Great Deal",below:2351,city:"Arlington",st:"VA",miles:21959,ext:"Black",int:"Black",mpg:26,mc:22,mh:30,eng:"250 hp 2.5L I4 (turbo)",hp:250,fuel:"Gasoline",tank:12,trans:"6-Speed Automatic",dt:"All-Wheel Drive",body:"SUV / Crossover",vin:"3MVDMBAY2NM432274",stock:"432274",cond:"Used",doors:4,lf:41,lr:36,cargo:20,pics:35,
+safety:["NHTSA ratings shown on listing (overall, frontal, side, rollover)","ABS Brakes","Adaptive Cruise Control","Backup Camera","Blind Spot Monitoring","Curtain Airbags","Driver Airbag","Front Side Airbags","Passenger Airbag"],
+opts:["Alloy Wheels","Bluetooth","Heated Seats","Sunroof/Moonroof"],
+hist:{title:"Clean title, no issues reported",acc:"1 accident reported (no damage reported)",own:2,chk:"AutoCheck (free report link on listing)"},
+mkt:{drop:0,dd:106,cd:106,saves:15,slow:true},
+apr:"7.99%",pmt:418,pm:{1000:400,2000:382,5000:330},t60:"Shorten to 60 months to save $1,476 in total interest ($477/mo)",
+dealer:{k:"d8"},
+fees:{t:"bad",s:"CarGurus shows $22,445, but the dealer’s ad text says $20,950, and its disclosure adds a $1,495 processing fee (20,950 + 1,495 = 22,445). The dealer also says every vehicle has LoJack at $2,299. Ask whether LoJack is already in the price or optional, and for the full out-the-door price."},
+perks:"Free 90-day limited-powertrain warranty, but the dealer says it is not available with discounted pricing. Carfax Certified Dealer, financing with 40+ lenders, online purchase and home delivery. Ask about their MD inspection program.",
+flags:[["w","Fees: $1,495 processing fee, plus a stated $2,299 LoJack charge on every vehicle."],["w","Listed 106 days with no price change and 15 saves. Dealer rating gap: 2.8 on CarGurus (78 reviews) vs 4.2 on Google (1,286)."],["i","Strongest engine here: 250 hp turbo, and lowest mileage (21,959). One accident on the history, no damage reported."]],
+desc:"2022 Mazda CX-30 2.5 Turbo Sport Utility, black exterior with black interior, smooth automatic transmission, clean AutoCheck report, 21,959 miles. Dealer ad text advertises $20,950. Free 90-day warranty, ask about the MD inspection program, over 500 cars in stock, Carfax Certified Dealer, financing with 40+ lenders and credit unions, finance for all credit types, tax ID welcome, buy online with home delivery. Disclosure: a $1,495 processing fee applies to every vehicle sale. All vehicles are equipped with LoJack vehicle recovery technology at a cost of $2,299. Taxes, tags, title, registration and state fees are not included. The complimentary 90-day warranty covers limited powertrain only and is not available with discounted pricing.",
+equip:"Alloy Wheels,MAZDA CONNECT,Automatic 6-Spd SKYACTIV-Drive Sport w/Manual Mode,Moon Roof,Tilt & Telescoping Wheel,Power Door Locks,Radar Cruise Control,Daytime Running Lights,Power Seat,Traction Control,AWD,Hill Launch Assist,Dual Air Bags,ABS (4-Wheel),Push Button Start,4-Cyl SKYACTIV-G Turbo 2.5 Liter,Blind-Spot Monitor,Bluetooth Wireless,AM/FM/HD Radio,Heated Seats,Side Air Bags,LED Headlamps,Dynamic Stability Control,Backup Camera,F&R Head Curtain Air Bags,Air Conditioning,Knee Air Bags,Power Windows,Lane Keep Assist,Power Steering,Rear Spoiler,Keyless Entry",
+img:"2026/07/01/14/53/2022_mazda_cx-30-pic-2433080522426080034-1024x768.jpeg"}
+];
+const DEALERS={
+d1:{name:"Ourisman Chevrolet of Marlow Heights",phone:"(814) 885-1566",addr:"4400 Branch Ave, Marlow Heights, MD 20748",cg:"3.7 (13 reviews)",g:"4.1 (2,924 reviews)",place:"ChIJrf42N-K7t4kRx2nZEe8JoI0",hrs:"Mon-Sat 9 AM-8 PM, Sun closed"},
+d2:{name:"JBA Kia",phone:"(844) 787-2306",addr:"7345 Governor Ritchie Hwy, Glen Burnie, MD 21061",cg:"3.0 (3 reviews)",g:"4.7 (807 reviews)",place:"ChIJSW0uCK79t4kRVZcfAI1GHyQ",hrs:"Mon-Fri 9 AM-8 PM, Sat 9 AM-6 PM, Sun closed"},
+d3:{name:"i.g. Burton Buick GMC of Glen Burnie",phone:"(410) 927-1071",addr:"6917 Ritchie Hwy, Glen Burnie, MD 21061",cg:"4.0 (10 reviews), Top Rated Dealer 2026",g:"4.5 (2,646 reviews)",place:"ChIJawJwWWv9t4kR3M9ps5dfSCw",hrs:"Mon-Fri 9 AM-8 PM, Sat 9 AM-6 PM, Sun closed"},
+d4:{name:"Bomnin Chevrolet Manassas",phone:"(571) 556-9554",addr:"8000 Sudley Rd, Manassas, VA 20109",cg:"3.4 (18 reviews)",g:"4.5 (3,856 reviews)",place:"ChIJwadX5VxdtokR8uAqQy7JiGE",hrs:"Mon-Fri 9 AM-8 PM, Sat 9 AM-6 PM, Sun 11 AM-5 PM"},
+d5:{name:"Hyundai of Dundalk",phone:"(443) 332-7943",addr:"1000 Merritt Boulevard, Dundalk, MD 21222",cg:"2.9 (43 reviews)",g:"4.4 (1,018 reviews)",place:"ChIJYcIVCLoHyIkRHgpxIuswlnA",hrs:"Mon-Sat 9 AM-8 PM, Sun closed"},
+d6:{name:"Apple Honda",phone:"(410) 873-7853",addr:"8620 Baltimore National Pike, Ellicott City, MD 21043",cg:"4.5 (2 reviews)",g:"4.5 (2,579 reviews)",place:"ChIJT_qj_W4fyIkR2B8hUbdelFM",hrs:"Mon-Fri 9 AM-9 PM, Sat 9 AM-7 PM, Sun closed"},
+d7:{name:"DARCARS Toyota Frederick",phone:"(866) 567-1101",addr:"5293 Buckeystown Pike (Route 85), Frederick, MD 21704",cg:"4.2 (5 reviews)",g:"4.3 (1,468 reviews)",place:"ChIJS8clsonZyYkRYArvI-mRr9A",hrs:"Mon-Sat 9 AM-9 PM, Sun closed"},
+d8:{name:"Prime Motors",phone:"(571) 582-9217",addr:"4715 King St, Arlington, VA 22206",cg:"2.8 (78 reviews)",g:"4.2 (1,286 reviews)",place:"ChIJN62SN_uzt4kRwxCbSZGD_Ro",hrs:"Mon-Sat 10 AM-7 PM, Sun 12-4 PM (Google). Dealer also lists a text line (703) 671-8100"}
+};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money=n=>"$"+Number(n).toLocaleString("en-US");
+const imgUrl=c=>"https://static.cargurus.com/images/forsale/"+c.img;
+const cgUrl=c=>"https://www.cargurus.com/details/"+c.cgid;
+const IDS={c1:"450093671",c2:"454914196",c3:"452342485",c4:"455325649",c5:"457400140",c6:"456626734",c7:"457024768",c8:"451878728"};
+CARS.forEach(c=>c.cgid=IDS[c.id]);
+const state={view:"cards",open:new Set(),q:"",mk:"",sort:"loc"};
+function stats(){
+ const p=CARS.map(c=>c.price),m=CARS.map(c=>c.miles);
+ const locs=new Set(CARS.map(c=>c.city+c.st)).size;
+ $("#stats").innerHTML=[[CARS.length,"cars"],[locs,"locations"],[money(Math.min(...p))+" to "+money(Math.max(...p)),"listed price range"],[Math.min(...m).toLocaleString()+" to "+Math.max(...m).toLocaleString(),"miles"],[CARS.filter(c=>c.hist.acc.startsWith("0")).length,"with no accident reported"]]
+ .map(a=>`<div class="stat"><b>${esc(a[0])}</b><span>${esc(a[1])}</span></div>`).join("");
+}
+function filtered(){
+ const q=state.q.toLowerCase();
+ let a=CARS.filter(c=>(!state.mk||c.mk===state.mk)&&(!q||[c.y,c.mk,c.md,c.tr,c.ext,c.int,c.city,c.st,c.vin,c.stock,DEALERS[c.dealer.k].name].join(" ").toLowerCase().includes(q)));
+ const s=state.sort;
+ const f={price:(x,y)=>x.price-y.price,miles:(x,y)=>x.miles-y.miles,below:(x,y)=>y.below-x.below,year:(x,y)=>y.y-x.y||x.price-y.price,days:(x,y)=>y.mkt.dd-x.mkt.dd,loc:(x,y)=>x.st.localeCompare(y.st)||x.city.localeCompare(y.city)||x.price-y.price}[s];
+ return a.sort(f);
+}
+function tbl(rows){return `<table>${rows.filter(r=>r[1]!==""&&r[1]!=null).map(r=>`<tr><td>${esc(r[0])}</td><td>${r[1]}</td></tr>`).join("")}</table>`}
+function chips(a){return `<div class="chips">${a.map(x=>`<span>${esc(x)}</span>`).join("")}</div>`}
+function detail(c){
+ const d=DEALERS[c.dealer.k],pl=PLAT[c.pl];
+ return `<div class="det">
+ <h4>Overview</h4>${tbl([["Year / make / model",`${c.y} ${esc(c.mk)} ${esc(c.md)}`],["Trim",esc(c.tr)],["Body type",esc(c.body)],["Exterior color",esc(c.ext)],["Interior color",esc(c.int)],["Mileage",c.miles.toLocaleString()+" mi"],["Condition",esc(c.cond)],["VIN",esc(c.vin)],["Stock number",esc(c.stock)],["Photos on listing",c.pics]])}
+ <h4>Fuel economy</h4>${tbl([["Combined",c.mpg+" MPG"],["City",c.mc+" MPG"],["Highway",c.mh+" MPG"],["Fuel type",c.fuel],["Fuel tank",c.tank+" gal"]])}
+ <h4>Performance</h4>${tbl([["Engine",esc(c.eng)],["Horsepower",c.hp+" hp"],["Transmission",esc(c.trans)],["Drivetrain",esc(c.dt)]])}
+ <h4>Measurements</h4>${tbl([["Doors",c.doors],["Front legroom",c.lf+" in"],["Back legroom",c.lr+" in"],["Cargo volume",c.cargo+" cu ft"]])}
+ <h4>Safety</h4>${chips(c.safety)}
+ <h4>Options</h4>${chips(c.opts)}
+ <h4>History</h4>${tbl([["Title",esc(c.hist.title)],["Accidents",esc(c.hist.acc)],["Previous owners",c.hist.own],["History source",esc(c.hist.chk)]])}
+ <h4>Market and price history</h4>${tbl([["Deal rating",`${esc(c.deal)}, ${money(c.below)} below market`],["Price history",c.mkt.drop?`Dropped ${money(c.mkt.drop)}${c.was?`, from ${money(c.was)}`:""}`:"No price changes"],["Time on market",`${c.mkt.dd} days at dealership, ${c.mkt.cd} days on CarGurus`],["Saves",c.mkt.saves],["Selling slowly?",c.mkt.slow?"Yes, on the market longer than average; there may be price flexibility":"Not flagged"]])}
+ <h4>Estimated payment (CarGurus)</h4>${tbl([["Monthly",`${money(c.pmt)}/mo at est. ${esc(c.apr)} APR, 72 months, $0 down, good credit (680-739)`],["With $1,000 down",money(c.pm[1000])+"/mo"],["With $2,000 down",money(c.pm[2000])+"/mo"],["With $5,000 down",money(c.pm[5000])+"/mo"],["Shorter loan",esc(c.t60)]])}
+ <p style="color:var(--mute);font-size:13px">Estimates exclude title, registration and some dealer charges, and are not a financing offer.</p>
+ <h4>Fees and what the price includes</h4><p>${esc(c.fees.s)}</p>
+ <h4>Dealer perks and coverage</h4><p>${esc(c.perks)}</p>
+ <h4>Dealer</h4>${tbl([["Name",esc(d.name)],["Phone",`<a href="tel:${esc(d.phone.replace(/\D/g,""))}">${esc(d.phone)}</a>`],["Address",esc(d.addr)],["CarGurus rating",esc(d.cg)],["Google rating",esc(d.g)],["Hours",esc(d.hrs)],["Directions",`<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.name+" "+d.addr)}&query_place_id=${d.place}" target="_blank" rel="noopener">Open in Google Maps</a>`],["Listing",`<a href="${cgUrl(c)}" target="_blank" rel="noopener">View on CarGurus</a>`]])}
+ <h4>Dealer’s description</h4><p>${esc(c.desc)}</p>
+ <h4>Full equipment list (as listed)</h4>${chips(c.equip.split(","))}
+ <h4>Ask the seller: ${esc(pl.n)}</h4>
+ <ul>${pl.q.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+ <p><b>Ask for these in writing:</b> the out-the-door price with every fee itemized, a Carfax or AutoCheck, service records, and whether the car comes with any warranty.</p>
+ </div>`;
+}
+function card(c){
+ const open=state.open.has(c.id),d=DEALERS[c.dealer.k];
+ return `<article class="car${open?" open":""}" data-id="${c.id}">
+ <div class="ibox" data-lbl="1">Photo from CarGurus<img loading="lazy" src="${esc(imgUrl(c))}" alt="${c.y} ${esc(c.mk)} ${esc(c.md)}" onerror="this.remove()"></div>
+ <div class="body">
+  <h3>${c.y} ${esc(c.mk)} ${esc(c.md)}</h3><div class="trim">${esc(c.tr)} · ${esc(c.ext)} · ${esc(c.int)}</div>
+  <div class="price"><b>${money(c.price)}</b>${c.was?`<span class="was">${money(c.was)}</span>`:""}<span class="tag good">${esc(c.deal)}, ${money(c.below)} below market</span></div>
+  <div class="kv"><span>Mileage</span><div>${c.miles.toLocaleString()} mi</div><span>Engine</span><div>${esc(c.eng)}</div><span>MPG</span><div>${c.mc}/${c.mh} (${c.mpg} comb.)</div><span>Owners</span><div>${c.hist.own}</div><span>Accidents</span><div>${esc(c.hist.acc)}</div><span>On market</span><div>${c.mkt.dd} days</div><span>Est. payment</span><div>${money(c.pmt)}/mo</div><span>Dealer</span><div>${esc(d.name)}</div></div>
+  <ul class="flags">${c.flags.map(f=>`<li class="${f[0]==="i"?"i":""}">${esc(f[1])}</li>`).join("")}</ul>
+ </div>
+ <div class="more"><button data-t="${c.id}">${open?"Hide details":"Show all details and questions"}</button></div>
+ ${detail(c)}
+ </article>`;
+}
+function groups(list){
+ const g=new Map();
+ list.forEach(c=>{const k=c.city+", "+c.st;if(!g.has(k))g.set(k,[]);g.get(k).push(c)});
+ return [...g.entries()].map(([k,a])=>{
+  const ds=[...new Set(a.map(c=>c.dealer.k))].map(x=>DEALERS[x]);
+  return `<section class="grp"><h2>${esc(k)}</h2><div class="cnt">${a.length} car${a.length>1?"s":""}</div>
+  ${ds.map(d=>`<div class="dealer"><b>${esc(d.name)}</b><span>${esc(d.addr)} · <a href="tel:${esc(d.phone.replace(/\D/g,""))}">${esc(d.phone)}</a></span><span>Google ${esc(d.g)} · CarGurus ${esc(d.cg)}</span><span>${esc(d.hrs)}</span></div>`).join("")}
+  <div class="cards">${a.map(card).join("")}</div></section>`}).join("");
+}
+function table(list){
+ const cols=[["Car",c=>`${c.y} ${c.mk} ${c.md} ${c.tr}`],["Price",c=>money(c.price)],["Below mkt",c=>money(c.below)],["Miles",c=>c.miles.toLocaleString()],["Color",c=>c.ext],["Owners",c=>c.hist.own],["Accidents",c=>c.hist.acc.split(" ")[0]],["Days",c=>c.mkt.dd],["Location",c=>c.city+", "+c.st],["Dealer",c=>DEALERS[c.dealer.k].name]];
+ return `<div class="wrap"><table class="cmp"><thead><tr>${cols.map(c=>`<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${list.map(c=>`<tr>${cols.map(k=>`<td>${esc(k[1](c))}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+function render(){
+ const l=filtered();
+ $("#out").innerHTML=l.length?(state.view==="cards"?(state.sort==="loc"?groups(l):`<div class="cards" style="margin-top:14px">${l.map(card).join("")}</div>`):table(l)):"<p>No cars match.</p>";
+ setTimeout(probe,2500);
+}
+function probe(){
+ const imgs=[...document.querySelectorAll(".ibox img")];
+ if(imgs.length&&imgs.every(i=>!i.complete||i.naturalWidth===0))$("#note").style.display="block";
+ else $("#note").style.display="none";
+}
+const mks=[...new Set(CARS.map(c=>c.mk))].sort();
+mks.forEach(m=>$("#mk").insertAdjacentHTML("beforeend",`<option>${m}</option>`));
+$("#q").oninput=e=>{state.q=e.target.value;render()};
+$("#mk").onchange=e=>{state.mk=e.target.value;render()};
+$("#sort").onchange=e=>{state.sort=e.target.value;render()};
+$("#vc").onclick=()=>{state.view="cards";$("#vc").classList.add("on");$("#vt").classList.remove("on");render()};
+$("#vt").onclick=()=>{state.view="table";$("#vt").classList.add("on");$("#vc").classList.remove("on");render()};
+$("#ex").onclick=()=>{const all=state.open.size<CARS.length;state.open=new Set(all?CARS.map(c=>c.id):[]);$("#ex").textContent=all?"Collapse all":"Expand all";render()};
+$("#out").onclick=e=>{const b=e.target.closest("button[data-t]");if(!b)return;const id=b.dataset.t;state.open.has(id)?state.open.delete(id):state.open.add(id);b.closest(".car").classList.toggle("open");b.textContent=state.open.has(id)?"Hide details":"Show all details and questions"};
+stats();render();
+</script>
+</body>
+</html>
